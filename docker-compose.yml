@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:12-alpine
+    container_name: aqa-psql
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgres
+    environment:
+      - POSTGRES_DB=base
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=qwerty
