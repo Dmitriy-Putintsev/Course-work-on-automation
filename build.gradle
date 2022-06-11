@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.freefair.lombok' version '5.3.0'
     id 'io.qameta.allure' version '2.9.6'
 }
 
@@ -40,12 +41,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    //Выбирается одна из баз данных:
+    //Для работы с базой данных mySQL (со строки ниже необходимо снять комментарий):
+//    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/base_mysql')
+    //Для работы с базой данных postgreSQL
+    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:postgresql://localhost:5432/5432')
     //В тестах, при вызове `gradlew test -Dheadless=true`
     //будет передаваться этот параметр в JVM (где его подтянет Selenide)
-    systemProperty 'selenide.headless', System.getProperty('headless')
-    //Выбирается одна из баз данных:
-    //Для работы с базой данных mySQL
-    systemProperty 'datasource', System.getProperty('datasource', 'jdbc:mysql://localhost:3306/base_mysql')
-    //Для работы с базой данных postgreSQL (со строки ниже необходимо снять комментарий):
-    //systemProperty 'datasource', System.getProperty('datasource', 'jdbc:postgresql://localhost:5432/base_postgresql')
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty 'db.url', System.getProperty('db.url')
+    systemProperty 'db.user', System.getProperty('db.user', "admin")
+    systemProperty 'db.password', System.getProperty('db.password', "qwerty")
+    systemProperty 'sut.url', System.getProperty('sut.url', "http://localhost:8080/")
 }
